@@ -1,0 +1,378 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Trier Workshop</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="paul.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>Stylometry Workshop</h2>
+					<p>Visualizing Stylistic Relationships</p>
+					<aside class="notes">Let's step back now and talk about the methodological approach I am taking (and I should apologize, as many of you may be quite familiar with this already, but I've found it is wise to lay everything out clearly so we all understand exactly what is happening). The methodology I use is something know as stylometry, an idea originally developed for authorship identification. This is the idea that different people use words at different rates, often unconsiously. I can study variable frequencies in word usage to determine who may have written a document or to assess what document a sentence or fragment may have come from. The words that are most often useful for this are the most common ones: in english the rates at which the 40 most common words like 'the" "of and "is" are used can be predictive of authorship. In Chinese these most common words are often vey predictive of genre, but they also contain authorship signals. Scholars have used appraoches like this to establish authorship in cases of questional attribution, for example in the 1960s scholars reevaulateed the authorship of twelve of the Federalist Papers (anonymous essays encouraging support for the US consitution). More recently, people have shown that JK Rowling of Harry Potter fame wrote some detective fiction under a pseudonym</aside>
+				</section>
+				<section><h2>Finding Digital Materials</h2>
+					<p class="fragment">This depends on your research langauge and question (surprising no one)</p></section>
+					<section data-background-iframe="https://www.folgerdigitaltexts.org/download/" data-background-interactive><p><code style="color: black">https://www.folgerdigitaltexts.org/download/</code></p></section>
+					<section><p><code>http://www.perseus.tufts.edu/hopper/</code></p></section>
+					<section data-background-iframe="https://corpus.byu.edu/" data-background-interactive><p><code style="color: black">https://corpus.byu.edu/</code></p></section>
+					<section data-background-iframe="https://dumps.wikimedia.org/" data-background-interactive><p><code style="color: black">https://dumps.wikimedia.org/</code></p></section>
+					<section><p><code>http://www.gutenberg.org/</code></p></section>
+					<section><p><code>https://www.hathitrust.org/</code></p></section>
+					<section><h2>Bulk downloading materials varies depending on the source</h2></section>
+					<section><p><a href='https://www.gutenberg.org/wiki/Gutenberg:Information_About_Robot_Access_to_our_Pages'>Robots Access To Gutenberg</a></p></section>
+					<section><h2>Aim to aquire plain text files (usually with a .txt extension)</h2>
+					<h2 class='fragment'>HTML, XML, XHTML are technically plain text but contain extensive markup</h2></section>
+					<section><h2>Decide on what texts will help you answer your question</h2></section>
+					<section><h2>Decide on a file naming convention and storage structure</h2></section>
+					<section><h2>I prefer a simple folder called corpus</h2>
+					<h2 class="fragment">with files named label1_label2_label3.txt</h2></section>
+					<section><h2>The analysis files I've provided are set up to handle this format</h2></section>
+					<section><h2>You can add subfolders if you like higher levels of organization</h2></section>
+					<section><h2>Once you've built your corpus, then you can analyze it</h2></section>
+					<section>
+						<h2>Vector Space Model</h2>
+					</section>
+				<section>
+					<h2>Document Vectors</h2>
+					<p>Each document is represented by a list comprised of normalized word frequencies</p>
+					<aside class="notes"><p>This list of numbers can be understood as a vector, or a point in space. I have essentially spatialized my documents, creating what is known as a vector space model (a model being a simplified way of representing a system). Each document is now a point in space and I can simply measure the straight line distances between them. The shorter this distance, the more stylistically similar two documents are .</p>
+					<p>
+						This might be a somewhat discomfiting defintion of style, moving away from a qualitative experience of the text to one that is quantitatively defined. I am using, a particular definition of style [next slide] 
+					</p></aside>
+				</section>
+				<section><blockquote>Style is a property of texts constituted by an ensemble of formal features which can be observed quantitatively or qualitatively.</blockquote>
+					<p style="position: fixed; right:0px; font-size: .35em">-Hermann, van Dalen-Oskam, and Schöch, "Revisiting Style, a Key Concept in Literary Studies," <i>Journal of Literary Theory</i>, March 2015</p>
+					<aside class="notes">This may seem odd, but quantitative variations actually let me cluster documents based on all manner of characteristics like genre, content, authorship, and even period of creation.</aside>
+				</section>
+				<section>
+					<h2>What characteristics we see depends on the formal features</h2>
+					<h2 class="fragment">One-grams, bi-grams, tri-grams...</h2>
+					<h2 class="fragment">Frequent vs. Infrequent</h2>
+				</section>
+				<section>
+					<h2>A Hypothetical Example</h2>
+					<table>
+						<thead class="fragment">
+							<tr>
+								<th></th>
+								<th>the</th>
+								<th>of</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="fragment">
+								<td>Doc 1</td>
+								<td style="text-align: end;">2</td>
+								<td style="text-align: end;">4</td>
+							</tr>
+							<tr class="fragment">
+								<td>Doc 2</td>
+								<td style="text-align: end;">6</td>
+								<td style="text-align: end;">1</td>
+							</tr>
+							<tr class="fragment">
+								<td>Doc 3</td>
+								<td style="text-align: end;">7</td>
+								<td style="text-align: end;">3</td>
+							</tr>
+							<tr class="fragment">
+								<td>Doc 4</td>
+								<td style="text-align: end;">2</td>
+								<td style="text-align: end;">6</td>
+							</tr>
+							<tr class="fragment">
+								<td>Doc 5</td>
+								<td style="text-align: end;">3</td>
+								<td style="text-align: end;">5</td>
+							</tr>
+						</tbody>
+					</table>
+					<aside class='notes'>To give you a sense of what I mean by spatializing documents, here is a hypothetical situation with two variables or words. "of" and "the". [show rates]. I can compare documents based on the "of" dimension against the "the" dimension.</aside>
+				</section>
+				<section data-background-iframe="scatter.html"></section>
+				<section>
+					<h2>Hypothetical Documents</h2>
+					<table>
+						<thead class="fragment">
+							<tr>
+								<th></th>
+								<th>the</th>
+								<th>of</th>
+								<th>and</th>
+								<th>it</th>
+								<th>is</th>
+							</tr>
+						</thead>
+						<tbody class="fragment">
+							<tr >
+								<td>Doc 1</td>
+								<td style="text-align: end;">8</td>
+								<td style="text-align: end;">6</td>
+								<td style="text-align: end;">9</td>
+								<td style="text-align: end;">4</td>
+								<td style="text-align: end;">3</td>
+							</tr>
+							<tr>
+								<td>Doc 2</td>
+								<td style="text-align: end;">11</td>
+								<td style="text-align: end;">7</td>
+								<td style="text-align: end;">4</td>
+								<td style="text-align: end;">5</td>
+								<td style="text-align: end;">3</td>
+							</tr>
+							<tr>
+								<td>Doc 3</td>
+								<td style="text-align: end;">4</td>
+								<td style="text-align: end;">5</td>
+								<td style="text-align: end;">8</td>
+								<td style="text-align: end;">8</td>
+								<td style="text-align: end;">5</td>
+							</tr>
+							<tr>
+								<td>Doc 4</td>
+								<td style="text-align: end;">9</td>
+								<td style="text-align: end;">6</td>
+								<td style="text-align: end;">7</td>
+								<td style="text-align: end;">2</td>
+								<td style="text-align: end;">6</td>
+							</tr>
+							<tr>
+								<td>Doc 5</td>
+								<td style="text-align: end;">5</td>
+								<td style="text-align: end;">5</td>
+								<td style="text-align: end;">5</td>
+								<td style="text-align: end;">8</td>
+								<td style="text-align: end;">7</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+				<section section data-background-iframe="scatterpca.html"></section>
+				<section>
+					<h1>Software</h1>
+					<h3>Anaconda (Python 3)</h3>
+				</section>
+				<section data-background-iframe="https://www.anaconda.com/download">
+				<p><code style="color: black">https://www.anaconda.com/download</code></p></section>
+				<section><h2>R is another excellent option</h2></section>
+				<section><h1>Create Project Folder</h1>
+					<h2><code>Analysis Script</code></h2>
+					<h2><code>Corpus Folder</code></h2>
+				</section>
+				<section>
+					<h1>Building A Corpus</h1>
+					<h2>Plain Text Files</h2>
+					<h2>Put in Corpus Folder</h2>
+				</section>
+				<section>
+					<h1>Naming Convention</h1>
+					<h2><code>Label1_Label2_Label3.txt</code></h2>
+				</section>
+				<section>
+					<h1>Cleaning</h1>
+				</section>
+				<section>
+					<h1>Using the Python Script</h1>
+				</section>
+				<section>
+					<h2>Python Concepts</h2>
+				</section>
+				<section>
+					<code>Strings</code>
+					<p><code>"Created with double quotation marks"</code></p>
+					<p><code>'or with single quotes'</code></p>
+				</section>
+				<section><code>Integers</code>
+					<p><code>1</code></p>
+					<p><code>-15</code></p>
+				</section>
+				<section>
+					<code>Tuples</code>
+					<p><code>(1, 2, 3, 4)</code></p>
+					<p><code>("a", "b", "c", "d")</code></p>
+				</section>
+				<section>
+					<h2>Let's go to the code</h2>
+				</section>
+				
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				],
+				// Display presentation control arrows
+	controls: true,
+
+	// Help the user learn the controls by providing hints, for example by
+	// bouncing the down arrow when they first encounter a vertical slide
+	controlsTutorial: false,
+
+	// Determines where controls appear, "edges" or "bottom-right"
+	controlsLayout: 'bottom-right',
+
+	// Visibility rule for backwards navigation arrows; "faded", "hidden"
+	// or "visible"
+	controlsBackArrows: 'faded',
+
+	// Display a presentation progress bar
+	progress: false,
+
+	// Display the page number of the current slide
+	slideNumber: false,
+
+	// Add the current slide number to the URL hash so that reloading the
+	// page/copying the URL will return you to the same slide
+	hash: true,
+
+	// Push each slide change to the browser history. Implies `hash: true`
+	history: false,
+
+	// Enable keyboard shortcuts for navigation
+	keyboard: true,
+
+	// Enable the slide overview mode
+	overview: true,
+
+	// Vertical centering of slides
+	center: true,
+
+	// Enables touch navigation on devices with touch input
+	touch: true,
+
+	// Loop the presentation
+	loop: false,
+
+	// Change the presentation direction to be RTL
+	rtl: false,
+
+	// See https://github.com/hakimel/reveal.js/#navigation-mode
+	navigationMode: 'default',
+
+	// Randomizes the order of slides each time the presentation loads
+	shuffle: false,
+
+	// Turns fragments on and off globally
+	fragments: true,
+
+	// Flags whether to include the current fragment in the URL,
+	// so that reloading brings you to the same fragment position
+	fragmentInURL: false,
+
+	// Flags if the presentation is running in an embedded mode,
+	// i.e. contained within a limited portion of the screen
+	embedded: false,
+
+	// Flags if we should show a help overlay when the questionmark
+	// key is pressed
+	help: true,
+
+	// Flags if speaker notes should be visible to all viewers
+	showNotes: false,
+
+	// Global override for autoplaying embedded media (video/audio/iframe)
+	// - null: Media will only autoplay if data-autoplay is present
+	// - true: All media will autoplay, regardless of individual setting
+	// - false: No media will autoplay, regardless of individual setting
+	autoPlayMedia: null,
+
+	// Global override for preloading lazy-loaded iframes
+	// - null: Iframes with data-src AND data-preload will be loaded when within
+	//   the viewDistance, iframes with only data-src will be loaded when visible
+	// - true: All iframes with data-src will be loaded when within the viewDistance
+	// - false: All iframes with data-src will be loaded only when visible
+	preloadIframes: null,
+
+	// Number of milliseconds between automatically proceeding to the
+	// next slide, disabled when set to 0, this value can be overwritten
+	// by using a data-autoslide attribute on your slides
+	autoSlide: 0,
+
+	// Stop auto-sliding after user input
+	autoSlideStoppable: true,
+
+	// Use this method for navigation when auto-sliding
+	autoSlideMethod: Reveal.navigateNext,
+
+	// Specify the average time in seconds that you think you will spend
+	// presenting each slide. This is used to show a pacing timer in the
+	// speaker view
+	defaultTiming: 120,
+
+	// Enable slide navigation via mouse wheel
+	mouseWheel: false,
+
+	// Hide cursor if inactive
+	hideInactiveCursor: true,
+
+	// Time before the cursor is hidden (in ms)
+	hideCursorTime: 2000,
+
+	// Hides the address bar on mobile devices
+	hideAddressBar: true,
+
+	// Opens links in an iframe preview overlay
+	// Add `data-preview-link` and `data-preview-link="false"` to customise each link
+	// individually
+	previewLinks: false,
+
+	// Transition style
+	transition: 'fade', // none/fade/slide/convex/concave/zoom
+
+	// Transition speed
+	transitionSpeed: 'fast', // default/fast/slow
+
+	// Transition style for full page slide backgrounds
+	backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+
+	// Number of slides away from the current that are visible
+	viewDistance: 3,
+
+	// Parallax background image
+	parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+	// Parallax background size
+	parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px"
+
+	// Number of pixels to move the parallax background per slide
+	// - Calculated automatically unless specified
+	// - Set to 0 to disable movement along an axis
+	parallaxBackgroundHorizontal: null,
+	parallaxBackgroundVertical: null,
+
+	// The display mode that will be used to show slides
+	display: 'block'
+			});
+		</script>
+	</body>
+</html>

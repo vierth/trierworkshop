@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="d3.min.js"></script>
+<style>
+body{
+    background-color:#222;
+    font-family: "Avenir", Helvetica, sans-serif,"Songti SC", "SimSun",	"华文细黑","STHeiti";
+}
+.axis line{
+    stroke:white;
+}
+.axis path{
+    stroke:white;
+}
+</style>
+</head>
+<body>
+<script>
+
+var data = [{doc:"Doc 3", x: -0.11949717072671047, y: -0.18683903206769006}, {doc:"Doc 2", x: -0.2541492407596811, y: 0.19985479913751547}, {doc:"Doc 1",x: 0.30293085097963635, y: -0.0856566169410388}, {doc: "Doc 5", x: -0.20844112855962477, y: -0.07000864490481518}, {doc:"Doc 4",x: 0.27915668906638, y: 0.1426494947760284}];
+var loadings = [{term:'and', x: 0.10499823470453101, y: -0.8803774036180394}, {term:'is', x: 0.3204808081429196, y: 0.1}, {term:'it', x: 0.6467065077933992, y: 0.3683688506708812}, {term:'of', x: -0.15920646584193884, y: 0.0764803212058794}, {term:'the', x: -0.6746188914183292, y: 0.25684527233500454}];
+var labels = [["Doc 3", "3"], ["Doc 2", "2"], ["Doc 1", "1"], ["Doc 5", "5"], ["Doc 4", "4"]];
+
+// var data = [{doc:'Doc 1',x:-1.1146351624873807,y:-3.515365218160397},{doc:'Doc 2',x:7.681914278235888,y:-1.362939086762948},{doc:'Doc 3',x:0.8392945191991261,y:5.349219592120507},{doc:'Doc 4',x:-5.044800066282397,y:-0.35402765743275044},{doc:'Doc 5',x:-2.3617735686652366,y:-0.11688762976441082}]
+// var loadings = [{term:'the',x:0.3539901519089554,y:0.49285947242021055},{term:'of',x:-0.3950184567057534,y:-0.0485319044280635},{term:'in',x:0.5909518338624102,y:-0.5410471148304961},{term:'it',x:-0.18536882107146002,y:0.5531657954312915},{term:'a',x:-0.5788486170342905,y:-0.3949807805409264}]
+
+
+var margin = {top: 100, right: 300, bottom: 100, left: 300},
+    width = window.innerWidth - 10,
+    height = window.innerHeight - 10;
+
+var x = d3.scaleLinear().range([0,width-margin.right-margin.left]);
+var y = d3.scaleLinear().range([height-margin.top-margin.bottom,0]);
+
+var xAxis = d3.axisBottom(x);
+var yAxis = d3.axisLeft(y);
+
+x.domain(d3.extent(loadings, function(d) { return d.x;})).nice();
+y.domain(d3.extent(loadings, function(d) { return d.y;})).nice();
+
+var svg = d3.select("body").append("svg")
+    .attr("width",width)
+    .attr("height",height)
+    .attr("transform", "translate(" + 5 + "," + 5 + ")");
+
+
+var gX = svg.append("g")
+    .attr("class", "axis axis--x")
+    .attr("transform", "translate("+margin.left+"," + (height - margin.bottom) + ")")
+    .attr("stroke","white")
+    .call(xAxis);
+
+var gY = svg.append("g")
+    .attr("class", "axis axis--y")
+    .attr("transform","translate("+margin.left+","+margin.top+")")
+    .attr("stroke","white")
+    .call(yAxis);
+
+var graphTitle = svg.append("text")
+    .attr("x", width/2)
+    .attr("y", margin.top)
+    .attr("font-size",48)
+    .attr("fill","white")
+    .attr("text-anchor", "middle")
+    .text("PCA")
+
+var xLabel = svg.append("text")
+    .attr("x",width/2)
+    .attr("y",height - 50)
+    .attr("font-size",32)
+    .attr("text-anchor","middle")
+    .attr("fill","white")
+    .text("PC1");
+  
+var yLabel = svg.append("text")
+    .attr("x",margin.left-70)
+    .attr("y",height/2)
+    .attr("font-size",32)
+    .attr("text-anchor","middle")
+    .attr("fill","white")
+    //.attr("transform", "rotate(-90,-40,"+height/2+")")
+    .text("PC2");
+console.log(data)
+console.log(loadings)
+svg.selectAll(".points")
+    .data(data)
+    .enter().append("text")
+    .attr("font-size",28)
+    .attr("x",function(d){console.log("x:",d.x,y(d.x));return x(d.x) + margin.left; })
+    .attr("y",function(d){ console.log("y:",d.y,y(d.y)); return y(d.y) + margin.top; })
+    .attr("text-anchor","middle")
+    .attr("fill","cyan")
+    .text(function(d){ return d.doc; })
+
+svg.selectAll(".loadings")
+    .data(loadings)
+    .enter().append("text")
+    .attr("font-size",28)
+    .attr("x",function(d){return x(d.x) + margin.left; })
+    .attr("y",function(d){ return y(d.y) + margin.top; })
+    .attr("text-anchor","middle")
+    .attr("fill","magenta")
+    .text(function(d){ return d.term; })
+
+// svg.append("line")
+//     .attr("x1",x(0)+margin.left)
+//     .attr("y1",margin.top)
+//     .attr("x2",x(0)+margin.left)
+//     .attr("y2",height-margin.bottom)
+//     .attr("stroke","white")
+//     .attr("opacity",0.5);
+
+// svg.append("line")
+//     .attr("x1",margin.left)
+//     .attr("y1",y(0)+margin.top)
+//     .attr("x2",width-margin.right)
+//     .attr("y2",y(0)+margin.top)
+//     .attr("stroke","white")
+//     .attr("opacity",0.5);
+
+</script>
+</body>
+</html>

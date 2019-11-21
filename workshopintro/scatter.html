@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="d3.min.js"></script>
+<style>
+body{
+    font-family: "Avenir", Helvetica, sans-serif,"Songti SC", "SimSun",	"华文细黑","STHeiti";
+    background-color: #222
+}
+.axis line{
+    stroke:white;
+}
+.axis path{
+    stroke:white;
+}
+</style>
+</head>
+<body>
+<script>
+
+var data = [{doc:"Doc 1",之:2,的:4},{doc:"Doc 2",之:6,的:1},{doc:"Doc 3",之:7,的:3},{doc:"Doc 4",之:2,的:6},{doc:"Doc 5",之:3,的:5}]
+
+var margin = {top: 100, right: 300, bottom: 100, left: 300},
+    width = window.innerWidth - 10,
+    height = window.innerHeight - 10;
+
+var x = d3.scaleLinear().range([0,width-margin.right-margin.left]);
+var y = d3.scaleLinear().range([height-margin.top-margin.bottom,0]);
+
+var xAxis = d3.axisBottom(x);
+var yAxis = d3.axisLeft(y);
+
+x.domain([0, d3.max(data, function(d) { return d.之;})+1]).nice();
+y.domain([0, d3.max(data, function(d) { return d.的;})+1]).nice();
+
+var svg = d3.select("body").append("svg")
+    .attr("width",width)
+    .attr("height",height)
+    .attr("transform", "translate(" + 5 + "," + 5 + ")");
+
+
+var gX = svg.append("g")
+    .attr("class", "axis axis--x")
+    .attr("transform", "translate("+margin.left+"," + (height - margin.bottom) + ")")
+    .attr("stroke","white")
+    .call(xAxis);
+
+var gY = svg.append("g")
+    .attr("class", "axis axis--y")
+    .attr("transform","translate("+margin.left+","+margin.top+")")
+    .attr("stroke","white")
+    .call(yAxis);
+
+var graphTitle = svg.append("text")
+    .attr("x", width/2)
+    .attr("y", margin.top)
+    .attr("font-size",48)
+    .attr("fill","white")
+    .attr("text-anchor", "middle")
+    .text("The vs. Of")
+
+var xLabel = svg.append("text")
+    .attr("x",width/2)
+    .attr("y",height - 50)
+    .attr("font-size",32)
+    .attr("text-anchor","middle")
+    .attr("fill","white")
+    .text("The");
+  
+var yLabel = svg.append("text")
+    .attr("x",margin.left-50)
+    .attr("y",height/2)
+    .attr("font-size",32)
+    .attr("text-anchor","middle")
+    .attr("fill","white")
+    //.attr("transform", "rotate(-90,-40,"+height/2+")")
+    .text("Of");
+
+function draw(){
+    svg.selectAll(".points")
+        .data(data)
+        .enter().append("text")
+        .attr('font-size',28)
+        .attr("x",function(d){ return x(d.之) + margin.left; })
+        .attr("y",function(d){ return (height-margin.bottom) - y(d.的); })
+        .attr("text-anchor","middle")
+        .attr("fill","cyan")
+        .text(function(d){ return d.doc; })
+
+
+}
+
+draw();
+
+</script>
+</body>
+</html>
