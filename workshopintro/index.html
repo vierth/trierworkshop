@@ -27,8 +27,8 @@
 			<div class="slides">
 				<section>
 					<h2>Stylometry Workshop</h2>
-					<p>Visualizing Stylistic Relationships</p>
-					<aside class="notes">Let's step back now and talk about the methodological approach I am taking (and I should apologize, as many of you may be quite familiar with this already, but I've found it is wise to lay everything out clearly so we all understand exactly what is happening). The methodology I use is something know as stylometry, an idea originally developed for authorship identification. This is the idea that different people use words at different rates, often unconsiously. I can study variable frequencies in word usage to determine who may have written a document or to assess what document a sentence or fragment may have come from. The words that are most often useful for this are the most common ones: in english the rates at which the 40 most common words like 'the" "of and "is" are used can be predictive of authorship. In Chinese these most common words are often vey predictive of genre, but they also contain authorship signals. Scholars have used appraoches like this to establish authorship in cases of questional attribution, for example in the 1960s scholars reevaulateed the authorship of twelve of the Federalist Papers (anonymous essays encouraging support for the US consitution). More recently, people have shown that JK Rowling of Harry Potter fame wrote some detective fiction under a pseudonym</aside>
+					<p>Visualizing Stylistic Relationships with PCA</p>
+					<aside class="notes">Today we are going to be going through the basics of a small branch of stylometric analysis using principal component analysis. We won't be getting into text classification, distance metrics, or heirarchical cluster analysis, but this will get you on the first steps.</aside>
 				</section>
 				<section><h2>Finding Digital Materials</h2>
 					<p class="fragment">This depends on your research langauge and question (surprising no one)</p></section>
@@ -41,7 +41,7 @@
 					<section><h2>Bulk downloading materials varies depending on the source</h2></section>
 					<section><p><a href='https://www.gutenberg.org/wiki/Gutenberg:Information_About_Robot_Access_to_our_Pages'>Robots Access To Gutenberg</a></p></section>
 					<section><h2>Aim to aquire plain text files (usually with a .txt extension)</h2>
-					<h2 class='fragment'>HTML, XML, XHTML are technically plain text but contain extensive markup</h2></section>
+					<h2 class='fragment'>HTML, XML, XHTML are technically plain text but contain extensive markup</h2><aside class='notes'>I've included a script in the workshop folder that cleans the files of markup</aside></section>
 					<section><h2>Decide on what texts will help you answer your question</h2></section>
 					<section><h2>Decide on a file naming convention and storage structure</h2></section>
 					<section><h2>I prefer a simple folder called corpus</h2>
